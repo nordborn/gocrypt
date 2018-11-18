@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/nordborn/gocrypt.svg?branch=master)](https://travis-ci.org/nordborn/gocrypt)
 [![Code Coverage](https://codecov.io/gh/nordborn/gocrypt/branch/master/graph/badge.svg)](https://codecov.io/gh/nordborn/gocrypt/branch/master/graph/badge.svg)
 
+
 **The most popular encrypt functions for Go (Golang) programming language**
 
 # Installation

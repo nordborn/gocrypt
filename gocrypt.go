@@ -1,7 +1,7 @@
-// Package cryptonord is a tiny wrapper that
+// Package gocrypt is a tiny wrapper that
 // provides convenient access
 // to the most used encrypting operations
-package main
+package gocrypt
 
 import (
 	"crypto/hmac"

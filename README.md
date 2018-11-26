@@ -8,7 +8,7 @@
 
 `$ go get -u github.com/nordborn/gocrypt`
 
-or via `go.mod`:
+if you use `go.mod`, add:
 
 `github.com/nordborn/gocrypt v1.0.0`
 

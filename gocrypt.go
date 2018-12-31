@@ -78,7 +78,7 @@ func (o *out) Base64() string {
 	return base64.StdEncoding.EncodeToString(o.enc)
 }
 
-// HexDigest returns hax digest string of the hash
+// HexDigest returns hex digest string of the hash
 // from the step HMACSHA() or SHA()
 func (o *out) HexDigest() string {
 	return hex.EncodeToString(o.enc)

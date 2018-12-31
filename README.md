@@ -13,7 +13,7 @@ It provides simple sequential API to get Base64() or HexDigest().
 
 if you use `go.mod`, add:
 
-`github.com/nordborn/gocrypt v2.0.0`
+`github.com/nordborn/gocrypt v2.0.1`
 
 # Usage
 

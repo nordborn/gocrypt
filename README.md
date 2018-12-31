@@ -47,3 +47,5 @@ func main() {
 - `Base64()`
 
 See more in `gocrypt_test.go`
+
+Enjoy!

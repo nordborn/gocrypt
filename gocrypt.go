@@ -1,6 +1,13 @@
 // Package gocrypt is a tiny wrapper that
 // provides convenient access
-// to the most used encrypting operations
+// to the most popular encrypting operations:
+// HMAC(SHA) and SHA (sha512 and sha256 are supported)
+// with output as HexDigest or Base64 strings
+// Example:
+//
+// 	enc1 := gocrypt.New(msg, secret).HMACSHA(gocrypt.SHA512).HexDigest()
+//  enc2 := gocrypt.New(msg, nil).SHA(gocrypt.SHA256).Base64()
+//
 package gocrypt
 
 import (
@@ -12,60 +19,67 @@ import (
 	"hash"
 )
 
-// todo impl interface
-// New(msg, secret).HMAC(gocrypt.SHA265).HexDigest()
-// New(msg, secret).SHA256().Base64()
+type alg string
 
-func hmacdo(secret, msg string, shaFn func() hash.Hash) []byte {
-	h := hmac.New(shaFn, []byte(secret))
-	h.Write([]byte(msg))
-	return h.Sum(nil)
+const (
+	SHA256 = alg("SHA256")
+	SHA512 = alg("SHA512")
+)
+
+type in struct {
+	msg    []byte
+	secret []byte
 }
 
-// HMACSHA256Base64Encoded as a string
-func HMACSHA256Base64Encoded(secret, msg string) string {
-	hd := hmacdo(secret, msg, sha256.New)
-	return base64.StdEncoding.EncodeToString(hd)
+type out struct {
+	enc []byte
 }
 
-// HMACSHA256HexDigest as a string
-func HMACSHA256HexDigest(secret, msg string) string {
-	hd := hmacdo(secret, msg, sha256.New)
-	return hex.EncodeToString(hd)
+// New creates a new hasher
+// If you don't need secret (for further SHA()), set nil
+func New(msg, secret []byte) *in {
+	hd := in{msg, secret}
+	return &hd
 }
 
-// HMACSHA512Base64Encoded as a string
-func HMACSHA512Base64Encoded(secret, msg string) string {
-	hd := hmacdo(secret, msg, sha512.New)
-	return base64.StdEncoding.EncodeToString(hd)
+// HMACSHA encrypts msg using secret with provided algorithm
+// gocrypt.SHA256 or gocrypt.SHA512
+func (in *in) HMACSHA(a alg) *out {
+	var fn func() hash.Hash
+	switch a {
+	case SHA256:
+		fn = sha256.New
+	case SHA512:
+		fn = sha512.New
+	}
+	hmc := hmac.New(fn, in.secret)
+	hmc.Write(in.msg)
+	return &out{hmc.Sum(nil)}
 }
 
-// HMACSHA512HexDigest as a string
-func HMACSHA512HexDigest(secret, msg string) string {
-	hd := hmacdo(secret, msg, sha512.New)
-	return hex.EncodeToString(hd)
+// SHA encrypts msg with provided algorithm
+// gocrypt.SHA256 or gocrypt.SHA512
+func (in *in) SHA(a alg) *out {
+	var s []byte
+	switch a {
+	case SHA256:
+		arr := sha256.Sum256(in.msg)
+		s = arr[:]
+	case SHA512:
+		arr := sha512.Sum512(in.msg)
+		s = arr[:]
+	}
+	return &out{s}
 }
 
-// SHA256Base64Encoded as a string
-func SHA256Base64Encoded(msg string) string {
-	s := sha256.Sum256([]byte(msg))
-	return base64.StdEncoding.EncodeToString(s[:])
+// Base64 returns base64-encoded string of the hash
+// from the step HMACSHA() or SHA()
+func (out *out) Base64() string {
+	return base64.StdEncoding.EncodeToString(out.enc)
 }
 
-// SHA256HexDigest as a string
-func SHA256HexDigest(msg string) string {
-	s := sha256.Sum256([]byte(msg))
-	return hex.EncodeToString(s[:])
-}
-
-// SHA512Base64Encoded as a string
-func SHA512Base64Encoded(msg string) string {
-	s := sha512.Sum512([]byte(msg))
-	return base64.StdEncoding.EncodeToString(s[:])
-}
-
-// SHA512HexDigest as a string
-func SHA512HexDigest(msg string) string {
-	s := sha512.Sum512([]byte(msg))
-	return hex.EncodeToString(s[:])
+// HexDigest returns hax digest string of the hash
+// from the step HMACSHA() or SHA()
+func (out *out) HexDigest() string {
+	return hex.EncodeToString(out.enc)
 }

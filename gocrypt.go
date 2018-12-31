@@ -12,6 +12,10 @@ import (
 	"hash"
 )
 
+// todo impl interface
+// New(msg, secret).HMAC(gocrypt.SHA265).HexDigest()
+// New(msg, secret).SHA256().Base64()
+
 func hmacdo(secret, msg string, shaFn func() hash.Hash) []byte {
 	h := hmac.New(shaFn, []byte(secret))
 	h.Write([]byte(msg))

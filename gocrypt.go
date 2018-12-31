@@ -19,11 +19,17 @@ import (
 	"hash"
 )
 
-type alg string
+// Specific vars SHA256 and SHA512
+// will be used as args for HMACSHA() or SHA()
+type alg struct {
+	v string
+}
 
-const (
-	SHA256 = alg("SHA256")
-	SHA512 = alg("SHA512")
+var (
+	// Use it as the arg for HMACSHA() or SHA()
+	SHA256 = &alg{"SHA256"}
+	// Use is as the arg for HMACSHA() or SHA()
+	SHA512 = &alg{"SHA512"}
 )
 
 type in struct {
@@ -42,9 +48,9 @@ func New(msg, secret []byte) *in {
 	return &hd
 }
 
-// HMACSHA encrypts msg using secret with provided algorithm
-// gocrypt.SHA256 or gocrypt.SHA512
-func (i *in) HMACSHA(a alg) *out {
+// HMACSHA encrypts msg using secret with
+// provided algorithm name gocrypt.SHA256 or gocrypt.SHA512
+func (i *in) HMACSHA(a *alg) *out {
 	var fn func() hash.Hash
 	switch a {
 	case SHA256:
@@ -57,9 +63,9 @@ func (i *in) HMACSHA(a alg) *out {
 	return &out{hmc.Sum(nil)}
 }
 
-// SHA encrypts msg with provided algorithm
-// gocrypt.SHA256 or gocrypt.SHA512
-func (i *in) SHA(a alg) *out {
+// SHA encrypts msg with
+// provided algorithm name gocrypt.SHA256 or gocrypt.SHA512
+func (i *in) SHA(a *alg) *out {
 	var s []byte
 	switch a {
 	case SHA256:

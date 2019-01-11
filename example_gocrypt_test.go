@@ -5,7 +5,7 @@ import (
 	"github.com/nordborn/gocrypt"
 )
 
-// This example demonstrates common usage of the gocrypt
+// This example demonstrates common usage of gocrypt
 func Example_HMACSHA() {
 	res := gocrypt.NewFromStr("pair=ltcusd&nonce=152442791667649",
 		"0IOP8VD6QM5OYM20XSM85IYOU8UHXP36J2RFSFO265J3").

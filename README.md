@@ -11,10 +11,6 @@ It provides simple sequential API to get Base64() or HexDigest().
 
 `$ go get -u github.com/nordborn/gocrypt`
 
-if you use `go.mod`, add:
-
-`github.com/nordborn/gocrypt v2.0.1`
-
 # Usage
 
 ```Go

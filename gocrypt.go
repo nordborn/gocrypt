@@ -9,7 +9,7 @@
 // 	enc2 := gocrypt.New(msg, nil).SHA(gocrypt.SHA256).Base64()
 //
 // Call format:
-//  Hasher(Algorithm).Output()
+//  New(msg, secretOptional).Hasher(Algorithm).Output()
 //
 // Hashers:
 // 	HMACSHA()

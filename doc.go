@@ -24,5 +24,4 @@ Output:
 	HexDigest()
 	Base64()
 */
-
 package gocrypt

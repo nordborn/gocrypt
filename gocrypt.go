@@ -16,9 +16,9 @@ type alg struct {
 }
 
 var (
-	// Use it as the arg for HMACSHA() or SHA()
+	// SHA256 algorithm. Use it as the arg for HMACSHA() or SHA()
 	SHA256 = &alg{"SHA256"}
-	// Use is as the arg for HMACSHA() or SHA()
+	// SHA512 algorithm. Use is as the arg for HMACSHA() or SHA()
 	SHA512 = &alg{"SHA512"}
 )
 

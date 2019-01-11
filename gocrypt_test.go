@@ -1,7 +1,6 @@
 package gocrypt_test
 
 import (
-	"fmt"
 	"github.com/nordborn/gocrypt"
 	"testing"
 )
@@ -28,7 +27,7 @@ var expected = map[string]string{
 	"SHA512Base64Encoded":     "x+ny0W5SUhLRZRzG6vGvPTu4BYaUmG9aQbXW4aD5LO+k097sTT6XehbrJYrN9irYlrF451gSzbAyF3R4r6TUaw==",
 }
 
-func TestHMACSHA(t *testing.T) {
+func Test_HMACSHA(t *testing.T) {
 	h := gocrypt.New([]byte(msg), []byte(secret))
 	compare(t, h.HMACSHA(gocrypt.SHA512).Base64(), expected["HMACSHA512Base64Encoded"])
 	compare(t, h.HMACSHA(gocrypt.SHA512).HexDigest(), expected["HMACSHA512HexDigest"])
@@ -37,7 +36,7 @@ func TestHMACSHA(t *testing.T) {
 
 }
 
-func TestSHA(t *testing.T) {
+func Test_SHA(t *testing.T) {
 	h := gocrypt.New([]byte(msg), []byte(secret))
 	compare(t, h.SHA(gocrypt.SHA256).HexDigest(), expected["SHA256HexDigest"])
 	compare(t, h.SHA(gocrypt.SHA512).HexDigest(), expected["SHA512HexDigest"])
@@ -45,17 +44,7 @@ func TestSHA(t *testing.T) {
 	compare(t, h.SHA(gocrypt.SHA512).Base64(), expected["SHA512Base64Encoded"])
 }
 
-func TestNewFromStr(t *testing.T) {
+func Test_NewFromStr(t *testing.T) {
 	h := gocrypt.NewFromStr(msg, secret)
 	compare(t, h.HMACSHA(gocrypt.SHA512).HexDigest(), expected["HMACSHA512HexDigest"])
-}
-
-func ExampleHMACSHA() {
-	res := gocrypt.New([]byte("pair=ltcusd&nonce=152442791667649"),
-		[]byte("0IOP8VD6QM5OYM20XSM85IYOU8UHXP36J2RFSFO265J3")).
-		HMACSHA(gocrypt.SHA256).
-		HexDigest()
-
-	fmt.Println(res)
-	// Output: 92e05c5a3d6f2415412030c0ccae1e5e561a41c0aa75a9877b8bbf0cef49cb83
 }

@@ -48,6 +48,12 @@ func New(msg, secret []byte) *in {
 	return &hd
 }
 
+// NewFromStr accepts strings instead of
+// slice of bytes and then calls New()
+func NewFromStr(msg, secret string) *in {
+	return New([]byte(msg), []byte(secret))
+}
+
 // HMACSHA encrypts msg using secret with
 // provided algorithm name gocrypt.SHA256 or gocrypt.SHA512
 func (i *in) HMACSHA(a *alg) *out {

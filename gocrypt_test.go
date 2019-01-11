@@ -45,6 +45,11 @@ func TestSHA(t *testing.T) {
 	compare(t, h.SHA(gocrypt.SHA512).Base64(), expected["SHA512Base64Encoded"])
 }
 
+func TestNewFromStr(t *testing.T) {
+	h := gocrypt.NewFromStr(msg, secret)
+	compare(t, h.HMACSHA(gocrypt.SHA512).HexDigest(), expected["HMACSHA512HexDigest"])
+}
+
 func ExampleHMACSHA() {
 	res := gocrypt.New([]byte("pair=ltcusd&nonce=152442791667649"),
 		[]byte("0IOP8VD6QM5OYM20XSM85IYOU8UHXP36J2RFSFO265J3")).

@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/nordborn/gocrypt.svg?branch=master)](https://travis-ci.org/nordborn/gocrypt)
 [![Code Coverage](https://codecov.io/gh/nordborn/gocrypt/branch/master/graph/badge.svg)](https://codecov.io/gh/nordborn/gocrypt/branch/master/graph/badge.svg)
-
+[![GoDoc](https://godoc.org/github.com/nordborn/gocrypt?status.svg)](https://godoc.org/github.com/nordborn/gocrypt)
 
 **Gocrypt is a tiny convenient wrapper for SHA and HMAC(SHA) functions (supports SHA512 and SHA256)**
 

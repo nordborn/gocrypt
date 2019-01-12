@@ -35,17 +35,17 @@ type Out struct {
 	enc []byte
 }
 
-// New creates a new hasher.
-// If you don't need secret (for further SHA()), pass nil
-func New(msg, secret []byte) *In {
-	hd := In{msg, secret}
-	return &hd
+// New accepts strings and then calls NewFromBytes().
+// If you don't need secret (for further SHA()), pass ""
+func New(msg, secret string) *In {
+	return NewFromBytes([]byte(msg), []byte(secret))
 }
 
-// NewFromStr accepts strings instead of
-// slice of bytes and then calls New()
-func NewFromStr(msg, secret string) *In {
-	return New([]byte(msg), []byte(secret))
+// NewFromBytes creates a new hasher.
+// If you don't need secret (for further SHA()), pass nil
+func NewFromBytes(msg, secret []byte) *In {
+	hd := In{msg, secret}
+	return &hd
 }
 
 // HMACSHA encrypts msg using secret with

@@ -29,7 +29,7 @@ var expected = map[string]string{
 }
 
 func TestIn_HMACSHA(t *testing.T) {
-	h := gocrypt.New([]byte(msg), []byte(secret))
+	h := gocrypt.NewFromBytes([]byte(msg), []byte(secret))
 	compare(t, h.HMACSHA(gocrypt.SHA512).Base64(), expected["HMACSHA512Base64Encoded"])
 	compare(t, h.HMACSHA(gocrypt.SHA512).HexDigest(), expected["HMACSHA512HexDigest"])
 	compare(t, h.HMACSHA(gocrypt.SHA256).Base64(), expected["HMACSHA256Base64Encoded"])
@@ -38,21 +38,21 @@ func TestIn_HMACSHA(t *testing.T) {
 }
 
 func TestIn_SHA(t *testing.T) {
-	h := gocrypt.New([]byte(msg), []byte(secret))
+	h := gocrypt.NewFromBytes([]byte(msg), []byte(secret))
 	compare(t, h.SHA(gocrypt.SHA256).HexDigest(), expected["SHA256HexDigest"])
 	compare(t, h.SHA(gocrypt.SHA512).HexDigest(), expected["SHA512HexDigest"])
 	compare(t, h.SHA(gocrypt.SHA256).Base64(), expected["SHA256Base64Encoded"])
 	compare(t, h.SHA(gocrypt.SHA512).Base64(), expected["SHA512Base64Encoded"])
 }
 
-func TestNewFromStr(t *testing.T) {
-	h := gocrypt.NewFromStr(msg, secret)
+func TestNew(t *testing.T) {
+	h := gocrypt.New(msg, secret)
 	compare(t, h.HMACSHA(gocrypt.SHA512).HexDigest(), expected["HMACSHA512HexDigest"])
 }
 
 // This example demonstrates common usage of gocrypt
 func Example() {
-	res := gocrypt.NewFromStr("pair=ltcusd&nonce=152442791667649",
+	res := gocrypt.New("pair=ltcusd&nonce=152442791667649",
 		"0IOP8VD6QM5OYM20XSM85IYOU8UHXP36J2RFSFO265J3").
 		HMACSHA(gocrypt.SHA256).
 		HexDigest()
